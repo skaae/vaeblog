@@ -77,7 +77,7 @@ This gibberish is typical for a generator trained without proper care!
 
 A couple of tricks are necessary to facilitate training: First of, we need to make sure that that neither the generator nor the discriminator becomes too good compared to the other. If the discriminator wins and classifies all images correctly, the error signal will be poor and the generator will not be able to learn from it. Conversely, if we allow the generator to win, it is usually exploiting a non-meaningful weakness in the discriminator (e.g. by coloring the entire image blue) which is not desirable.
 
-To alleviate the problem, we monitor how good the discriminator is at classifying real and fake images and monitor how good the generator is at fooling the discriminator. If either of the models gets too good we skip updating its parameters.
+To alleviate the problem, we monitor how good the discriminator is at classifying real and fake images and how good the generator is at fooling the discriminator. If one of the networks is too good, we skip updating its parameters.
 ```LUA
 local margin = 0.3
     sgdState_D.optimize = true
@@ -119,13 +119,13 @@ After a day of training, we get decent looking walks around in the latent space 
 [Movie](https://www.youtube.com/watch?v=PmC6ZOaCAOs&feature=youtu.be)
 
 #Going Further
-In a GAN we have no control over the generated image. I.e we sample some noise pass it through the generative network and look at the result.
+While it is good fun to generate images from noise, GANs gives us no control over the latent space.
 
-A related model is the Variational autoencoder VAE[3]. A VAE has a decoder which is converts noise into images. The second part of a VAE is an encoder which lets us map an image into the latent space and then reconstruct the input image using the decoder.
+A related generative model is the Variational autoencoder VAE[3] in which the decoder maps samples from a prior distribution to dataset samples - very similar to GAN generator.
 
 ![GAN-VAE](vae.png)
 
-The reconstruction cost in a VAE is often pixel wise squared error. We have found that a VAE is biased towards generating very smooth images with the correct "content" wheras the GAN tends to produce images with the correct style but they might lack some content.
+The VAE decoder is trained differently as we seek to minimize the pixelwise reconstruction error of the decoded image compared to the encoded image. This error term is problematic for images since translation is punished disproportionately to the error that human vision would percieve. In practice, this means that VAEs are biased towards generating very smooth images with the correct "content" wheras the GAN tends to produce images with the correct style but they might lack some content.
 
 
 
