@@ -110,7 +110,7 @@ After a few epochs (around 30 minutes on a GPU) you should start to see some spo
 
 Which after 100 epochs will look a little less spooky
 
-![lfw](lfw_example.png) dataset.
+![lfw](lfw_example.png)
 
 After a day of training, we get decent looking walks around in the latent space of the GAN:
 
@@ -130,7 +130,7 @@ The VAE decoder is trained differently as we seek to minimize the pixelwise reco
 
 
 Heres an example of VAE reconstructions early in training:
-![VAE recon](vae_recon.png)
+<p align='center'><img src="vae_recon.png" width="200"></p>
 
 Obviosly we want to
 
