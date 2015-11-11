@@ -106,11 +106,11 @@ We train our GAN using aligned and cropped images from the [Labeled faces in the
 
 After a few epochs (around 30 minutes on a GPU) you should start to see some spooky faces:
 
-![spooky](lfw_spooky.png)
+<p align='center'><img src="lfw_spooky.png" width="400"></p>
 
 Which after 100 epochs will look a little less spooky
 
-![lfw](lfw_example.png)
+<p align='center'><img src="lfw_example.png" width="400"></p>
 
 After a day of training, we get decent looking walks around in the latent space of the GAN:
 
@@ -125,8 +125,7 @@ A related generative model is the Variational autoencoder VAE[3] in which the de
 
 ![GAN-VAE](vae.png)
 
-The VAE decoder is trained differently as we seek to minimize the pixelwise reconstruction error of the decoded image compared to the encoded image. This error term is problematic for images since translation is punished disproportionately to the error that human vision would percieve. In practice, this means that VAEs are biased towards generating very smooth images with the correct "content" wheras the GAN tends to produce images with the correct style but they might lack some content.
-
+The VAE decoder is trained differently as we seek to minimize the pixelwise reconstruction error of the decoded image compared to the encoded image. This error term is problematic for images since translation is punished disproportionately to the small error percieved by human vision. In practice, this means that VAEs are biased towards generating smooth images with a correct global subject whereas GANs tend to produce images with correct local style with less emphasis on overall global structure.
 
 
 Heres an example of VAE reconstructions early in training:
@@ -137,8 +136,7 @@ Obviosly we want to
 ![VAE recon](vaegan.png)
 
 
-
- which lets us map an image into a latent space z. From the latent space we can ideally reconstruct the original image. In the VAE we put a standard normal prior on the latent space. I
+ which lets us map an image into a latent space z. From the latent space we can ideally reconstruct the original image. In the VAE we put a standard normal prior on the latent space.
 
 
 #
