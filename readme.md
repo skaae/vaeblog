@@ -15,7 +15,7 @@ After a day of training, we get decent looking walks around in the latent space 
 
 [Movie](https://www.youtube.com/watch?v=PmC6ZOaCAOs&feature=youtu.be)
 
-#Going Further
+### Going Further
 While it is good fun to generate images from noise, GANs gives us no control over the latent space.
 
 A related generative model is the variational autoencoder (VAE)[3] in which the decoder maps samples from a prior distribution to dataset samples - very similar to GAN generator.
