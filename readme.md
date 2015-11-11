@@ -28,9 +28,11 @@ The VAE decoder is trained differently as we seek to minimize the pixelwise reco
 Here’s an example of VAE reconstructions early in training:
 <p align='center'><img src="images/vae_recon.png" width="200"></p>
 
-We experimented with combining a VAE a GAN, basically we trained the model as VAE with the extra constraint that the images should fool the discriminator:
+We experimented with combining a VAE a GAN, basically we trained the model as VAE with the extra constraint that the images should fool the discriminator:    
+    
+**error = [GAN error] + [VAE reconstruction error]**
+    
 
-<p align='center'>**error = [GAN error] + [VAE reconstruction error]**</p>
 In our experiments the error was completely dominated by the VAE reconstruction term and we didn't see any improvement when comparing to a normal VAE. We then tried to pre-train a GAN and then use the generator as decoder in a VAE. The entire model was then trained using the error above. In this model we got best results by only training the bottom linear layer in the generator.
 
 Below we show input images (left) that are run through the trained VAE-GAN model. The encoder maps each image to the latent space and the GAN then tries to reconstruct the input image (right). Because we have trained the model with the combined error term you can see that it (sometimes) manages to reconstruct the input images. These results are far from perfect and we see a lot of smoothing compared to pure GAN reconstructions. We see some interesting interpolation e.g. remove objects in front of faces like sun glasses, hands etc.
