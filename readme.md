@@ -75,9 +75,9 @@ In principle, the GAN optimization game is simple. We use binary cross entropy t
 
 This gibberish is typical for a generator trained without proper care!
 
-A couple of tricks are necessary to facilitate training: First of, we need to make sure that that neither the generator nor the discriminator becomes too good compared to the other. If the discriminator wins and classifies all images correctly, the error signal will be poor and the generator will not be able to learn from it. Conversely, if we allow the generator to win, it is usually exploiting a non-meaningful weakness in the discriminator (e.g. by coloring the entire image blue) which is not a desirable to learn.
+A couple of tricks are necessary to facilitate training: First of, we need to make sure that that neither the generator nor the discriminator becomes too good compared to the other. If the discriminator wins and classifies all images correctly, the error signal will be poor and the generator will not be able to learn from it. Conversely, if we allow the generator to win, it is usually exploiting a non-meaningful weakness in the discriminator (e.g. by coloring the entire image blue) which is not desirable.
 
-To solve the problem, we measure the error for each batch and update only the gradients of the discriminator/generator if it is behaving gentlemanly towards its opponent.
+To alleviate the problem, we monitor how good the discriminator is at classifying real and fake images and monitor how good the generator is at fooling the discriminator. If either of the models gets too good we skip updating its parameters.
 ```LUA
 local margin = 0.3
     sgdState_D.optimize = true
@@ -102,15 +102,18 @@ Also, plenty of dropout is needed in the discriminator to avoid oscillating beha
 Finally, it may be beneficial to constrain the discriminator by decreasing its number of filters. We have found it best to let the generator conatain more filters than the discriminator.
 
 ### Generating faces
-We then trained the GAN on the deep funneled [labeled faces in the wild](http://vis-www.cs.umass.edu/lfw/)
+We train our GAN using aligned and cropped images from the [Labeled faces in the wild](http://vis-www.cs.umass.edu/lfw/) dataset.
 
-After a few epochs you should start to see some spooky faces...
+After a few epochs (around 30 minutes on a GPU) you should start to see some spooky faces:
+
 ![spooky](lfw_spooky.png)
 
 Which after 100 epochs will look a little less spooky
+
 ![lfw](lfw_example.png) dataset.
 
-We can also walk around in the latent space of the GAN:
+After a day of training, we get decent looking walks around in the latent space of the GAN:
+
 ![Faces](out.gif)
 
 [Movie](https://www.youtube.com/watch?v=PmC6ZOaCAOs&feature=youtu.be)
