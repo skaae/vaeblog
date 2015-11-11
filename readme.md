@@ -12,7 +12,7 @@ With careful optimization both generator and discriminator will improve and the 
 ### Implementing the GAN
 We implement the generator and discriminator as convolutional neural networks (CNN) and train them with stochastic gradient descent.
 
-The discriminator is a standard CNN with convolutional ReLU layers followed by maxpooling and generous Dropout.
+The discriminator is a standard CNN with convolutional ReLU layers followed by maxpooling.
 
 ```LUA
 model_D = nn.Sequential()
@@ -97,9 +97,9 @@ This simple heuristic seems to work, but there is definetely room for improvemen
 
 Secondly we found that batch normalization helps a lot when used in the generator. Using batch normalization in the discriminator did not help.
 
-Also, plenty of dropout is needed in the discriminator to avoid oscillating behavior, caused by the generator exploiting a weakness of the discriminator.
+Also, plenty of dropout is needed in the discriminator to avoid oscillating behavior caused by the generator exploiting a weakness of the discriminator.
 
-Finally, it may be beneficial to constrain the discriminator by decreasing its number of filters. We have found it best to let the generator many more filters than the discriminator.
+Finally, it may be beneficial to constrain the discriminator by decreasing its number of filters. We have found it best to let the generator conatain more filters than the discriminator.
 
 ### Generating faces
 We then trained the GAN on the deep funneled [labeled faces in the wild](http://vis-www.cs.umass.edu/lfw/)
