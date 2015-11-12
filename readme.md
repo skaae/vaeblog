@@ -114,9 +114,11 @@ Which after 100 epochs will look a little less spooky
 
 After a day of training, we get decent looking walks around in the latent space of the GAN:
 
+<p align ='center'>
 ![Faces](out.gif)
 
 [Movie](https://www.youtube.com/watch?v=PmC6ZOaCAOs&feature=youtu.be)
+</p>
 
 #Going Further
 While it is good fun to generate images from noise, GANs gives us no control over the latent space.
