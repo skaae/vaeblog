@@ -29,9 +29,9 @@ Here’s an example of VAE reconstructions early in training:
 <p align='center'><img src="images/vae_recon.png" width="200"></p>
 
 We experimented with combining a VAE a GAN, basically we trained the model as VAE with the extra constraint that the images should fool the discriminator:    
-    
+
 **error = [GAN error] + [VAE reconstruction error]**
-    
+
 
 In our experiments the error was completely dominated by the VAE reconstruction term and we didn't see any improvement when comparing to a normal VAE. We then tried to pre-train a GAN and then use the generator as decoder in a VAE. The entire model was then trained using the error above. In this model we got best results by only training the bottom linear layer in the generator.
 
