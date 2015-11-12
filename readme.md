@@ -133,7 +133,7 @@ Heres an example of VAE reconstructions early in training:
 
 Because both models generate images from standard normal noise we can combine the error functions as
     
-**error = VAE-reconstruction-error - GAN-error**    
+**Error = [VAE reconstruction error] - [GAN error]**    
     
     
 We combine a VAE and a GAN by first training a vanilla GAN. Then we combine the use the generator from the GAN as a decoder in a VAE. We found that if we train the combined GAN-VAE model end-to-end we the pixelswise error dominates and the resulting images becomes very smooth. To aviod this we only train the bottom layer in the generator.
