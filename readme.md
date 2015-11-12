@@ -116,10 +116,9 @@ After a day of training, we get decent looking walks around in the latent space 
 
 <p align ='center'>
 ![Faces](out.gif)
-
-[Movie](https://www.youtube.com/watch?v=PmC6ZOaCAOs&feature=youtu.be)
+<img src="out.gif">
 </p>
-
+->[Movie](https://www.youtube.com/watch?v=PmC6ZOaCAOs&feature=youtu.be)<-
 #Going Further
 While it is good fun to generate images from noise, GANs gives us no control over the latent space.
 
