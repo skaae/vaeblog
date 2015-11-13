@@ -85,40 +85,40 @@ We monitor the training by plotting three quantities:
   2. How good the discriminator is at classifying fakes as fakes (fake)
   3. how good the discriminator is at classifying real images as real (real)
 
- Below we plot these quantities for three different trainings.
- In panel A) we have batch normalization in the discriminator. The training does never converge because the discriminator is too good. In this case the sigmoid saturate and the generator will have no gradient.
+Below we plot these quantities for three different trainings.
+In panel A) we have batch normalization in the discriminator. The training does never converge because the discriminator is too good. In this case the sigmoid saturate and the generator will have no gradient.
 
- To alleviate the problem, we monitor how good the discriminator is at classifying real and fake images and how good the generator is at fooling the discriminator. If one of the networks is too good, we skip updating its parameters. This is shown in panel B). We also removed batch normalization from the discriminator.
+To alleviate the problem, we monitor how good the discriminator is at classifying real and fake images and how good the generator is at fooling the discriminator. If one of the networks is too good, we skip updating its parameters. This is shown in panel B). We also removed batch normalization from the discriminator.
 
- ```LUA
- local margin = 0.3
-         sgdState_D.optimize = true
-         sgdState_G.optimize = true
- if err_F < margin or err_R < margin then
-         sgdState_D.optimize = false
- end
- if err_F > (1.0-margin) or err_R > (1.0-margin) then
-         sgdState_G.optimize = false
- end
- if sgdState_G.optimize == false and sgdState_D.optimize == false then
-         sgdState_G.optimize = true
-         sgdState_D.optimize = true
- end
- ```
+```LUA
+local margin = 0.3
+     sgdState_D.optimize = true
+     sgdState_G.optimize = true
+if err_F < margin or err_R < margin then
+     sgdState_D.optimize = false
+end
+if err_F > (1.0-margin) or err_R > (1.0-margin) then
+     sgdState_G.optimize = false
+end
+if sgdState_G.optimize == false and sgdState_D.optimize == false then
+     sgdState_G.optimize = true
+     sgdState_D.optimize = true
+end
+```
 It seems a bit wasteful to not update the parameters in every batch. We tried another heuristic where we regularize the discriminator if the generator is not good enough. We increment the discriminators L2 penalty if the generator is not within a target range. If the generator fools the discriminator in 50% of the cases the error would be ~log(0.7) ~=0.69. We set the target range to be 0.9-1.2 i.e the discriminator should be better than the generator but not too much.
 The training is shown in panel C) (Keep in mind that the x-axis is different)
 
 ```LUA
 if f > 1.3 then  -- f is generator error
-   sgdState_D.coefL2 = sgdState_D.coefL2 + 0.00001
+sgdState_D.coefL2 = sgdState_D.coefL2 + 0.00001
 end
 
 if f < 0.9 then
-   sgdState_D.coefL2 = sgdState_D.coefL2 - 0.00001
+sgdState_D.coefL2 = sgdState_D.coefL2 - 0.00001
 end
 
 if sgdState_D.coefL2 < 0 then
-   sgdState_D.coefL2 = 0
+sgdState_D.coefL2 = 0
 end
 ```
 
